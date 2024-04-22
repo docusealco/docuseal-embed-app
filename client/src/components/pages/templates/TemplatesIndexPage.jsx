@@ -31,7 +31,7 @@ const TemplatesIndexPage = () => {
           <div className="max-w-lg">
             <h1 className="text-5xl font-bold">No templates found</h1>
             <p className="py-6">Unfortunately, there are no templates available at the moment.</p>
-            <a href="templates/new" className="btn btn-primary text-white">New Tempate</a>
+            <a href="/templates/new" className="btn btn-primary text-white no-animation">New Tempate</a>
           </div>
         </div>
       </div>
@@ -44,10 +44,13 @@ const TemplatesIndexPage = () => {
           {templates.map((template) => {
             return (
               <div className="card card-compact w-full bg-base-100 border border-base-300">
+                <figure className="h-36 overflow-hidden relative">
+                  <img className="absolute top-0" src={template.preview_image_url} alt={template.name} />
+                </figure>
                 <div className="card-body">
                   <h2 className="card-title">{template.name}</h2>
                   <div className="card-actions justify-end">
-                    <a href={`/templates/${template.id}`} className="btn btn-secondary text-white w-full">Show</a>
+                    <a href={`/templates/${template.id}`} className="btn btn-secondary text-white w-full no-animation">View</a>
                   </div>
                 </div>
               </div>

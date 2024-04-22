@@ -76,6 +76,17 @@ app.get('/api/submissions/:id', async (req, res) => {
   res.json({ token });
 })
 
+app.get('/api/templates/:template_id/submissions/new', async (req, res) => {
+  const { template_id: templateId } = req.params;
+  const { rows: templateRows } = await db.query('SELECT * FROM templates WHERE id = $1', [templateId]);
+
+  if (templateRows.length === 0) {
+    return res.status(404).json({ error: 'Template not found' });
+  }
+
+  res.json({ template: templateRows[0] });
+});
+
 // Template endpoints
 app.get('/api/templates/new', (req, res) => {
   const jwt = require('jsonwebtoken');
@@ -155,8 +166,9 @@ app.post('/api/templates', (req, res) => {
     }
   }).then((response) => response.json())
     .then(async (data) => {
-      await db.query('INSERT INTO templates (external_id, name, slug) VALUES ($1, $2, $3) ON CONFLICT (external_id) DO UPDATE SET name = $2, slug = $3', [data.id, data.name, data.slug]);
-      return res.status(200)
+      const { rows: templateRows } = await db.query('INSERT INTO templates (external_id, name, slug, preview_image_url) VALUES ($1, $2, $3, $4) ON CONFLICT (external_id) DO UPDATE SET name = $2, slug = $3, preview_image_url = $4 RETURNING *', [data.id, data.name, data.slug, data.documents[0]?.preview_image_url]);
+
+      return res.json({ template: templateRows[0] });
     }).catch((error) => {
       console.error('Error:', error);
       return res.status(500).json({ error: error });

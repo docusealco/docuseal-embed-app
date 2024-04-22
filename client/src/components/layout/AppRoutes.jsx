@@ -6,6 +6,7 @@ import TemplateShowPage from "../pages/templates/TemplateShowPage";
 import TemplatesIndexPage from "../pages/templates/TemplatesIndexPage";
 import SubmitterSignPage from "../pages/submitters/SubmitterSignPage";
 import SubmissionShowPage from "../pages/submissions/SubmissionShowPage";
+import SubmissionNewPage from "../pages/submissions/SubmissionNewPage";
 
 const AppRoutes = () => {
   const routes = [
@@ -28,6 +29,11 @@ const AppRoutes = () => {
       path: "/templates/new",
       component: <TemplateNewPage />,
       key: "template_new_page",
+    },
+    {
+      path: "/templates/:id/submissions/new",
+      component: <SubmissionNewPage />,
+      key: "submission_new_page",
     },
     {
       path: "/sign/:id",

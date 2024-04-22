@@ -2,7 +2,8 @@ CREATE TABLE IF NOT EXISTS templates (
   id SERIAL PRIMARY KEY,
   external_id VARCHAR(100),
   name VARCHAR(100),
-  slug VARCHAR(100)
+  slug VARCHAR(100),
+  preview_image_url VARCHAR(200)
 );
 
 CREATE TABLE IF NOT EXISTS submissions (

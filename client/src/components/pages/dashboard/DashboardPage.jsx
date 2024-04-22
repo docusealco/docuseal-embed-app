@@ -31,7 +31,7 @@ const DashboardPage = () => {
           <div className="max-w-lg">
             <h1 className="text-5xl font-bold">No submissions found</h1>
             <p className="py-6">Unfortunately, there are no submissions available at the moment.</p>
-            <a href="templates/new" className="btn btn-primary text-white">New Tempate</a>
+            <a href="/templates/new" className="btn btn-primary text-white no-animation">New Tempate</a>
           </div>
         </div>
       </div>
@@ -58,13 +58,13 @@ const DashboardPage = () => {
                             <ClipboardBoard
                               text="Copy Link"
                               copyText={`${document.location.origin}/sign/${submitter.id}`}
-                              className="btn btn-sm btn-info text-white"
+                              className="btn btn-sm btn-info text-white no-animation"
                             />
                           </div>
                         </div>
                       );
                     })}
-                    <a href={`/submissions/${submission.id}`} className='btn btn-sm btn-secondary text-white'>View</a>
+                    <a href={`/submissions/${submission.id}`} className="btn btn-sm btn-secondary text-white no-animation">View</a>
                   </div>
                 </div>
               </div>
