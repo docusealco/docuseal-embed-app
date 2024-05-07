@@ -3,7 +3,8 @@ CREATE TABLE IF NOT EXISTS templates (
   external_id VARCHAR(100),
   name VARCHAR(100),
   slug VARCHAR(100),
-  preview_image_url VARCHAR(200)
+  preview_image_url VARCHAR(200),
+  submitters jsonb[] default '{}'
 );
 
 CREATE TABLE IF NOT EXISTS submissions (
@@ -27,4 +28,4 @@ CREATE TABLE IF NOT EXISTS submitters (
 
 CREATE UNIQUE INDEX IF NOT EXISTS templates_external_id_idx ON templates(external_id);
 CREATE UNIQUE INDEX IF NOT EXISTS submissions_external_id_idx ON submissions(external_id);
-CREATE UNIQUE INDEX IF NOT EXISTS submitters_uuid_idx ON submitters(uuid);
+CREATE UNIQUE INDEX IF NOT EXISTS submitters_external_id_idx ON submitters(external_id);
