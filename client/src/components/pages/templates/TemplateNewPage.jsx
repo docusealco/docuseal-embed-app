@@ -7,12 +7,31 @@ const TemplateNewPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   let builderProps = {
-    fields: {},
-    fieldTypes: {},
-    customCss: {},
-    preview: {},
-    language: {},
-    roles: {}
+    defined_fields: {
+      fields: [
+        { "name": "First Name", "type": "text" },
+        { "name": "Last Name", "type": "text" }
+      ],
+    },
+    allowed_fields: {
+      fieldTypes: ['text', 'date', 'signature', 'initials']
+    },
+    custom_styles: {
+      customCss: `
+        #sign_yourself_button { background-color: #FFA500; }
+        #send_button { background-color: #87CEEB; }
+        #main_container { background-color: #dff7fe; }
+      `
+    },
+    preview_mode: {
+      preview: true
+    },
+    non_english_language: {
+      language: ['es', 'de', 'fr', 'pt', 'he', 'ar'][Math.floor(Math.random() * 6)]
+    },
+    defined_role_names: {
+      roles: ['Signer', 'Approver']
+    }
   }[searchParams.get('type')]
 
   builderProps ||= {
@@ -54,7 +73,7 @@ const TemplateNewPage = () => {
   }
 
   return (
-    <div className="border-1 border-info-content max-h-[calc(85vh)] overflow-y-hidden">
+    <div key={Math.random()} className="border-1 border-info-content max-h-[calc(85vh)] overflow-y-hidden">
       {token &&  (
         <DocusealBuilder
           token={token}

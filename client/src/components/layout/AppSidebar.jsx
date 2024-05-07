@@ -7,28 +7,28 @@ import { Link } from "react-router-dom";
 const AppSidebar = () => {
   const templateBuilders = [
     {
-      name: "Builder 1",
-      param: "type=fields"
+      name: "Defined Fields",
+      param: "type=defined_fields"
     },
     {
-      name: "Builder 2",
-      param: "type=fieldTypes"
+      name: "Allowed Fields",
+      param: "type=allowed_fields"
     },
     {
-      name: "Builder 3",
-      param: "type=customCss"
+      name: "Custom Styles",
+      param: "type=custom_styles"
     },
     {
-      name: "Builder 4",
-      param: "type=preview"
+      name: "Preview Mode",
+      param: "type=preview_mode"
     },
     {
-      name: "Builder 5",
-      param: "type=language"
+      name: "Non-English Language",
+      param: "type=non_english_language"
     },
     {
-      name: "Builder 6",
-      param: "type=roles"
+      name: "Defined Role Names",
+      param: "type=defined_role_names"
     }
   ];
 
@@ -59,10 +59,10 @@ const AppSidebar = () => {
             <BiSolidCustomize className="w-5 h=5" />
             <span>Builders</span>
           </h2>
-          <ul className="border-l border-gray-100 ml-5">
+          <ul className="border-l border-gray-100 ml-5 text-sm">
             {templateBuilders.map((builder) => (
-              <li key={builder.name}>
-                <Link to={`/templates/new?${builder.param}`}>
+              <li  key={builder.name}>
+                <Link className="pl-0" to={`/templates/new?${builder.param}`}>
                   <FaRegCircleDot className="w-5 h=5" />
                   {builder.name}
                 </Link>
