@@ -101,7 +101,7 @@ const SubmissionNewPage = () => {
     .then((response) => {
       if (response.ok) {
          response.json().then((data) => {
-          setSubmitting(false);
+            setSubmitting(false);
             navigate(`/templates/${templateId}`);
           });
       } else {

@@ -118,23 +118,16 @@ app.get('/api/submissions', async (req, res) => {
 
 app.get('/api/submissions/:id', async (req, res) => {
   const { id: submissionId } = req.params;
-  const { rows: submissionRows } = await db.query('SELECT * FROM submissions WHERE id = $1', [submissionId]);
 
-  if (submissionRows.length === 0) {
-    return res.status(404).json({ error: 'Submission not found' });
+  const { rows: submitterRows } = await db.query('SELECT * FROM submitters WHERE submission_id = $1 ORDER BY id DESC', [submissionId]);
+
+  if (submitterRows.length === 0) {
+    return res.status(404).json({ error: 'Submitters not found' });
   }
 
-  const templateId = submissionRows[0].template_id;
-
-  const { rows: templateRows } = await db.query('SELECT * FROM templates WHERE id = $1', [templateId]);
-
-  const jwt = require('jsonwebtoken');
-  const token = jwt.sign({
-    user_email: process.env.DOCUSEAL_USER_EMAIL,
-    template_id: templateRows[0].external_id,
-  }, process.env.DOCUSEAL_API_KEY)
-
-  res.json({ token });
+  res.json({
+    submitters: submitterRows
+  });
 })
 
 app.get('/api/templates/:template_id/submissions/new', async (req, res) => {
@@ -194,6 +187,22 @@ app.get('/api/templates/new', (req, res) => {
   res.json({ token });
 });
 
+app.get('/api/templates/demo', async (req, res) => {
+  const jwt = require('jsonwebtoken');
+  const { rows } = await db.query('SELECT * FROM templates ORDER BY id ASC');
+
+  if (rows.length === 0) {
+    return res.status(422).json({ error: 'Create at least one template' });
+  } else {
+    const token = jwt.sign({
+      user_email: process.env.DOCUSEAL_USER_EMAIL,
+      external_id: rows[0].id
+    }, process.env.DOCUSEAL_API_KEY)
+
+    res.json({ token });
+  }
+});
+
 app.get('/api/templates', async (req, res) => {
   const { rows } = await db.query('SELECT * FROM templates ORDER BY id DESC');
 
@@ -227,7 +236,20 @@ app.get('/api/templates/:id', async (req, res) => {
   });
 });
 
-app.post('/api/templates', (req, res) => {
+app.post('/api/templates', async (req, res) => {
+  const { name: templateName } = req.body;
+  const { rows: templateRows } = await db.query('INSERT INTO templates (name) VALUES ($1) RETURNING *', [templateName]);
+  const jwt = require('jsonwebtoken');
+  const token = jwt.sign({
+    user_email: process.env.DOCUSEAL_USER_EMAIL,
+    name: templateName,
+    external_id: templateRows[0].id
+  }, process.env.DOCUSEAL_API_KEY)
+
+  res.json({ token })
+});
+
+app.patch('/api/templates', (req, res) => {
   const { template_id: externalId } = req.body;
 
   fetch(`${process.env.DOCUSEAL_API_URL}/templates/${externalId}`, {
