@@ -3,6 +3,7 @@ import { Route, Routes, Navigate } from "react-router-dom";
 import DashboardPage from "../pages/dashboard/DashboardPage";
 import TemplateNewPage from "../pages/templates/TemplateNewPage";
 import TemplateShowPage from "../pages/templates/TemplateShowPage";
+import TemplateEditPage from "../pages/templates/TemplateEditPage";
 import TemplatesIndexPage from "../pages/templates/TemplatesIndexPage";
 import SubmitterSignPage from "../pages/submitters/SubmitterSignPage";
 import SubmissionShowPage from "../pages/submissions/SubmissionShowPage";
@@ -19,6 +20,11 @@ const AppRoutes = () => {
       path: "/templates",
       component: <TemplatesIndexPage />,
       key: "templates_index_page",
+    },
+    {
+      path: "/templates/:id/edit",
+      component: <TemplateEditPage />,
+      key: "template_edit_page",
     },
     {
       path: "/templates/:id",

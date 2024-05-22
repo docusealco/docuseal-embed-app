@@ -131,117 +131,119 @@ const SubmissionNewPage = () => {
       "Hi there,\n\nYou have been invited to submit the \"{{template.name}}\" form.\n\n{{submitter.link}}\n\nPlease contact us by replying to this email if you didn't request this.\n\nThanks,\n'{{account.name}}'";
 
     return (
-      <form ref={formRef} onSubmit={handleSubmit}>
-        <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-extrabold mb-4">
-            Add Recipients for "{template.name}"
-          </h1>
-        </div>
-        {formError && <div className="alert bg-red-400 text-white mb-4">{formError}</div>}
-        <div className={`grid ${template.submitters.length > 1 ? "md:grid-cols-2" : ""} gap-4`}>
-          {template.submitters.map((item, index) => (
-            <div className="form-control" key={item.uuid}>
-              {template.submitters.length > 1 ? (
-                <label className="label pt-0 pb-1 text-xs">
-                  <span className="label-text">{item.name}</span>
-                </label>
-              ) : null}
-              <input
-                type="hidden"
-                name={`submission.submitters[${index}].role`}
-                value={item.name}
-              />
-              <div data-field="name">
-                <input
-                  type="text"
-                  name={`submission.submitters[${index}].name`}
-                  autoComplete="off"
-                  className="input input-sm input-bordered w-full"
-                  placeholder="Name"
-                  required={index === 0}
-                  dir="auto"
-                />
-              </div>
-              <div className={`grid ${template.submitters.length === 1 ? "md:grid-cols-2 gap-1" : ""}`}>
-                <input
-                  type="email"
-                  multiple
-                  name={`submission.submitters[${index}].email`}
-                  autoComplete="off"
-                  className="input input-sm input-bordered mt-1.5 w-full"
-                  placeholder="Email (optional)"
-                />
-                <input
-                  type="tel"
-                  pattern="^\+[0-9\s\-]+$"
-                  name={`submission.submitters[${index}].phone`}
-                  onInvalid={(e) => e.target.setCustomValidity("Use internatioanl format: +1xxx...")}
-                  onInput={e => e.target.setCustomValidity('')}
-                  autoComplete="off"
-                  className="input input-sm input-bordered mt-1.5 w-full"
-                  placeholder="Phone (optional)"
-                />
-              </div>
-            </div>
-          ))}
-        </div>
-        <div className="mt-4 space-y-2">
+      <div className="bg-slate-50 rounded-box p-6 border border-slate-300" style={{maxHeight: 'calc(-90px + 100vh)', overflow: 'auto' }}>
+        <form ref={formRef} onSubmit={handleSubmit}>
           <div className="flex items-center justify-between">
-            <div className="form-control">
-              <label className="flex items-center cursor-pointer">
-                <input
-                  type="checkbox"
-                  name="submission.send_email"
-                  className="checkbox rounded bg-white checkbox-sm no-animation"
-                  defaultChecked
-                />
-                <span className="label">Send emails</span>
-              </label>
-            </div>
-            <button className="link-primary" onClick={handleEditMessage}>
-              Edit message
-            </button>
+            <h1 className="text-2xl font-extrabold mb-4">
+              Add Recipients for "{template.name}"
+            </h1>
           </div>
-          {emailOptionsVisible && (
-            <div className="card card-compact bg-base-200">
-              <div className="card-body">
-                <div className="form-control space-y-2">
-                  <div className="form-control">
-                    <label className="label">Subject</label>
-                    <input
-                      type="text"
-                      name="message.subject"
-                      className="input input-sm input-bordered w-full"
-                      defaultValue={emailSubject}
-                    />
-                  </div>
-                  <div className="form-control">
-                    <div className="flex items-center">
-                      <label className="label">Body</label>
+          {formError && <div className="alert bg-red-400 text-white mb-4">{formError}</div>}
+          <div className={`grid ${template.submitters.length > 1 ? "md:grid-cols-2" : ""} gap-4`}>
+            {template.submitters.map((item, index) => (
+              <div className="form-control" key={item.uuid}>
+                {template.submitters.length > 1 ? (
+                  <label className="label pt-0 pb-1 text-xs">
+                    <span className="label-text">{item.name}</span>
+                  </label>
+                ) : null}
+                <input
+                  type="hidden"
+                  name={`submission.submitters[${index}].role`}
+                  value={item.name}
+                />
+                <div data-field="name">
+                  <input
+                    type="text"
+                    name={`submission.submitters[${index}].name`}
+                    autoComplete="off"
+                    className="input input-sm input-bordered w-full"
+                    placeholder="Name"
+                    required={index === 0}
+                    dir="auto"
+                  />
+                </div>
+                <div className={`grid ${template.submitters.length === 1 ? "md:grid-cols-2 gap-1" : ""}`}>
+                  <input
+                    type="email"
+                    multiple
+                    name={`submission.submitters[${index}].email`}
+                    autoComplete="off"
+                    className="input input-sm input-bordered mt-1.5 w-full"
+                    placeholder="Email (optional)"
+                  />
+                  <input
+                    type="tel"
+                    pattern="^\+[0-9\s\-]+$"
+                    name={`submission.submitters[${index}].phone`}
+                    onInvalid={(e) => e.target.setCustomValidity("Use internatioanl format: +1xxx...")}
+                    onInput={e => e.target.setCustomValidity('')}
+                    autoComplete="off"
+                    className="input input-sm input-bordered mt-1.5 w-full"
+                    placeholder="Phone (optional)"
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="mt-4 space-y-2">
+            <div className="flex items-center justify-between">
+              <div className="form-control">
+                <label className="flex items-center cursor-pointer">
+                  <input
+                    type="checkbox"
+                    name="submission.send_email"
+                    className="checkbox rounded bg-white checkbox-sm no-animation"
+                    defaultChecked
+                  />
+                  <span className="label">Send emails</span>
+                </label>
+              </div>
+              <button className="link-primary" onClick={handleEditMessage}>
+                Edit message
+              </button>
+            </div>
+            {emailOptionsVisible && (
+              <div className="card card-compact bg-base-200">
+                <div className="card-body">
+                  <div className="form-control space-y-2">
+                    <div className="form-control">
+                      <label className="label">Subject</label>
+                      <input
+                        type="text"
+                        name="message.subject"
+                        className="input input-sm input-bordered w-full"
+                        defaultValue={emailSubject}
+                      />
                     </div>
-                    <textarea
-                      name="message.body"
-                      className="textarea textarea-bordered w-full"
-                      defaultValue={emailBody}
-                      rows={10}
-                      dir="auto"
-                    />
+                    <div className="form-control">
+                      <div className="flex items-center">
+                        <label className="label">Body</label>
+                      </div>
+                      <textarea
+                        name="message.body"
+                        className="textarea textarea-bordered w-full"
+                        defaultValue={emailBody}
+                        rows={10}
+                        dir="auto"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          )}
-        </div>
-        <div className="mt-4 flex justify-center">
-          <button
-            type="submit"
-            disabled={submitting}
-            className="btn btn-primary text-white no-animation w-full uppercase text-lg"
-          >
-            Confirm
-          </button>
-        </div>
-      </form>
+            )}
+          </div>
+          <div className="mt-4 flex justify-center">
+            <button
+              type="submit"
+              disabled={submitting}
+              className="btn btn-primary text-white no-animation w-full uppercase text-lg"
+            >
+              Confirm
+            </button>
+          </div>
+        </form>
+      </div>
     );
   }
 };

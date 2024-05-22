@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { PageLoader } from '../../ui';
 import { Link } from "react-router-dom";
+import { MdEdit } from "react-icons/md";
 
 const TemplatesIndexPage = () => {
   const [templates, setTemplates] = useState([]);
@@ -39,7 +40,7 @@ const TemplatesIndexPage = () => {
     )
   } else {
     return (
-      <div>
+      <div className="bg-slate-50 rounded-box p-6 border border-slate-300" style={{maxHeight: 'calc(-90px + 100vh)', overflow: 'auto' }}>
         <h1 className="text-2xl font-extrabold mb-4">Templates</h1>
         <div className="grid grid-cols-3 gap-4">
           {templates.map((template, index) => {
@@ -52,8 +53,12 @@ const TemplatesIndexPage = () => {
                 </figure>
                 <div className="card-body">
                   <h2 className="card-title">{template.name}</h2>
-                  <div className="card-actions justify-end">
-                    <Link to={`/templates/${template.id}`} className="btn btn-secondary text-white w-full no-animation">View</Link>
+                  <div className="flex gap-2 justify-between items-center">
+                    <Link to={`/templates/${template.id}`} className="btn btn-secondary text-white flex-grow no-animation">View</Link>
+                    <Link to={`/templates/${template.id}/edit`} className="btn btn-accent text-white no-animation">
+                      <MdEdit />
+                      Edit
+                    </Link>
                   </div>
                 </div>
               </div>

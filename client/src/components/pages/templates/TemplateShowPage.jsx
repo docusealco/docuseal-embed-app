@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { PageLoader, ClipboardBoard } from '../../ui';
 import { useParams } from 'react-router-dom';
 import { Link } from "react-router-dom";
+import { MdEdit } from "react-icons/md";
 
 const TemplateShowPage = () => {
   const { id: templateId } = useParams();
@@ -36,17 +37,23 @@ const TemplateShowPage = () => {
           <div className="max-w-lg">
             <h1 className="text-5xl font-bold">No submissions found</h1>
             <p className="py-6">Unfortunately, there are no submissions available at the moment.</p>
-            <Link to={`/templates/${templateId}/submissions/new`} className="btn btn-primary text-white no-animation">New Submission</Link>
+            {template.slug && <Link to={`/templates/${templateId}/submissions/new`} className="btn btn-primary text-white no-animation">New Submission</Link>}
           </div>
         </div>
       </div>
     )
   } else {
     return (
-      <div>
+      <div className="bg-slate-50 rounded-box p-6 border border-slate-300" style={{maxHeight: 'calc(-90px + 100vh)', overflow: 'auto' }}>
         <div className="flex items-center justify-between mb-4">
           <h1 className="text-2xl font-extrabold">{ template.name }</h1>
-          <Link to={`/templates/${templateId}/submissions/new`} className="btn btn-sm btn-primary text-white no-animation">New Submission</Link>
+          <div className="flex gap-2">
+            <Link to={`/templates/${templateId}/submissions/new`} className="btn btn-sm btn-primary text-white no-animation">New Submission</Link>
+            <Link to={`/templates/${templateId}/edit`} className="btn btn-sm btn-accent text-white no-animation">
+              <MdEdit />
+              Edit
+            </Link>
+          </div>
         </div>
         <div className="grid gap-4">
           {submissions.map((submission, index) => {

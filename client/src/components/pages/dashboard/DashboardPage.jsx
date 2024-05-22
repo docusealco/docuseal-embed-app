@@ -39,7 +39,7 @@ const DashboardPage = () => {
     )
   } else {
     return (
-      <div>
+      <div className="bg-slate-50 rounded-box p-6 border border-slate-300" style={{maxHeight: 'calc(-90px + 100vh)', overflow: 'auto' }}>
         <h1 className="text-2xl font-extrabold mb-4">Submissions</h1>
         <div className="grid gap-4">
           {submissions.map((submission, index) => {

@@ -8,13 +8,13 @@ const TemplateNewPage = () => {
   const [token, setToken] = useState();
   const [loading, setLoading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-  const [templateName, setTemplateName] = useState();
+  const [template, setTemplate] = useState({});
   const [searchParams, setSearchParams] = useSearchParams();
   const templateType = searchParams.get('type');
   const navigate = useNavigate();
 
   const customTemplateProps = {
-    defined_fields: {
+    custom_fields: {
       fields: [
         { "name": "First Name", "type": "text" },
         { "name": "Last Name", "type": "text" }
@@ -27,16 +27,15 @@ const TemplateNewPage = () => {
       customCss: `
         #sign_yourself_button { background-color: #FFA500; }
         #send_button { background-color: #87CEEB; }
-        #main_container { background-color: #dff7fe; }
       `
     },
     preview_mode: {
       preview: true
     },
-    non_english_language: {
+    multi_language: {
       language: ['es', 'de', 'fr', 'pt', 'he', 'ar'][Math.floor(Math.random() * 6)]
     },
-    defined_role_names: {
+    defined_signer_roles: {
       roles: ['Signer', 'Approver']
     }
   };
@@ -93,6 +92,7 @@ const TemplateNewPage = () => {
          response.json().then((data) => {
             setSubmitting(false);
             setToken(data.token);
+            setTemplate(data.template);
           });
       } else {
         response.json().then((data) => {
@@ -112,7 +112,7 @@ const TemplateNewPage = () => {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
-      body: JSON.stringify({ template_id: data.id })
+      body: JSON.stringify({ template_id: template.id, external_id: data.id })
     }).then((response) => response.json())
       .then((data) => {
         navigate(`/templates/${data.template.id}`);
@@ -128,13 +128,12 @@ const TemplateNewPage = () => {
     return (
       <div
         key={Math.random()}
-        className="border-1 border-info-content overflow-y-hidden"
-        style={{ height: "calc(100vh - 8rem)" }}
+        className="bg-slate-50 rounded-box border border-slate-300 border-1 overflow-y-hidden"
       >
         <DocusealBuilder
           token={token}
           onSave={handleTemplateSave}
-          templateName={templateName}
+          style={{ maxHeight: 'calc(-90px + 100vh)', display: 'block' }}
           {...builderProps}
         />
       </div>

@@ -9,7 +9,7 @@ const CustomLink = ({ to, children, className }) => {
   const isActive = location.pathname + location.search + location.hash === to;
 
   return (
-    <Link to={to} className={`${className} ${isActive ? "active" : ""}`}>
+    <Link to={to} className={`${className} ${isActive ? "active !text-white font-semibold" : ""}`}>
       {children}
     </Link>
   );
@@ -18,8 +18,8 @@ const CustomLink = ({ to, children, className }) => {
 const AppSidebar = () => {
   const templateBuilders = [
     {
-      name: "Defined Fields",
-      param: "type=defined_fields"
+      name: "Custom Fields",
+      param: "type=custom_fields"
     },
     {
       name: "Allowed Fields",
@@ -34,12 +34,12 @@ const AppSidebar = () => {
       param: "type=preview_mode"
     },
     {
-      name: "Non-English Language",
-      param: "type=non_english_language"
+      name: "Multi-Language",
+      param: "type=multi_language"
     },
     {
-      name: "Defined Role Names",
-      param: "type=defined_role_names"
+      name: "Defined Signer Roles",
+      param: "type=defined_signer_roles"
     },
   ];
 
@@ -66,10 +66,10 @@ const AppSidebar = () => {
           </CustomLink>
         </li>
         <li>
-          <h2 className="menu-title text-white text-lg flex items-center space-x-3 ">
-            <BiSolidCustomize className="w-5 h=5" />
+          <p className="menu-title text-white text-lg flex items-center space-x-3 font-normal">
+            <BiSolidCustomize className="w-5 h-5" />
             <span>Builders</span>
-          </h2>
+          </p>
           <ul className="border-l border-gray-100 ml-5 text-sm">
             {templateBuilders.map((builder) => (
               <li key={builder.name}>

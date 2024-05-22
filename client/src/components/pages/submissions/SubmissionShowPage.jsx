@@ -28,11 +28,12 @@ const SubmissionShowPage = () => {
     return <PageLoader />;
   } else if (submitters.length > 0) {
     return (
-      <DocusealForm
-        src={`${process.env.REACT_APP_DOCUSEAL_URL}/d/${submitters[submitters.length - 1].slug}`}
-        style={{ height: "calc(100vh - 8rem)" }}
-        preview={true}
-      />
+      <div className="bg-slate-50 rounded-box border border-slate-300" style={{maxHeight: 'calc(-90px + 100vh)', overflow: 'auto' }}>
+        <DocusealForm
+          src={`${process.env.REACT_APP_DOCUSEAL_URL}/d/${submitters[submitters.length - 1].slug}`}
+          preview={true}
+        />
+      </div>
     );
   } else {
     return (
