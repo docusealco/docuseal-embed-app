@@ -204,7 +204,7 @@ app.get('/api/templates/demo', async (req, res) => {
 });
 
 app.get('/api/templates', async (req, res) => {
-  const { rows } = await db.query('SELECT * FROM templates ORDER BY id DESC');
+  const { rows } = await db.query('SELECT * FROM templates WHERE slug IS NOT NULL ORDER BY id DESC');
 
   res.json({ templates: rows });
 });

@@ -45,8 +45,10 @@ const TemplatesIndexPage = () => {
           {templates.map((template, index) => {
             return (
               <div className="card card-compact w-full bg-base-100 border border-base-300" key={`template-${index}`}>
-                <figure className="h-36 overflow-hidden relative">
-                  <img className="absolute top-0" src={template.preview_image_url} alt={template.name} />
+                 <figure className="h-36 overflow-hidden relative">
+                  {template.preview_image_url && (
+                    <img className="absolute top-0" src={template.preview_image_url} alt={template.name} />
+                  )}
                 </figure>
                 <div className="card-body">
                   <h2 className="card-title">{template.name}</h2>
