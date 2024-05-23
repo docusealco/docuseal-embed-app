@@ -3,6 +3,7 @@ FROM alpine
 RUN apk add --no-cache nodejs yarn git
 
 ENV NODE_ENV=production
+ENV REACT_APP_DOCUSEAL_URL=https://docuseal.co
 
 WORKDIR /client
 
