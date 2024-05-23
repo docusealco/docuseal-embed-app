@@ -6,7 +6,7 @@ ENV NODE_ENV=production
 
 WORKDIR /client
 
-COPY client/package.json client/yarn.lock ./
+COPY client/package.json client/yarn.lock client/tailwind.config.js ./
 
 RUN yarn install
 
@@ -14,10 +14,6 @@ COPY client/public ./public
 COPY client/src ./src
 
 RUN yarn run build
-
-WORKDIR /app
-
-COPY /client/build ./public
 
 WORKDIR /server
 
@@ -27,6 +23,8 @@ RUN yarn install
 WORKDIR /app
 
 COPY server .
+RUN cp -r /server/node_modules ./node_modules
+RUN cp -r /client/build ./public
 
 EXPOSE 3000
 
