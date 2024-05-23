@@ -48,8 +48,9 @@ const TemplateShowPage = () => {
         <div className="flex items-center justify-between mb-4">
           <h1 className="text-2xl font-extrabold">{ template.name }</h1>
           <div className="flex gap-2">
+            <Link to={`/sign/${template.slug}`} className="btn btn-sm btn-info text-white no-animation">Sign Yourself</Link>
             <Link to={`/templates/${templateId}/submissions/new`} className="btn btn-sm btn-primary text-white no-animation">New Submission</Link>
-            <Link to={`/templates/${templateId}/edit`} className="btn btn-sm btn-accent text-white no-animation">
+            <Link to={`/templates/${templateId}/edit`} className="btn btn-sm btn-success text-white no-animation">
               <MdEdit />
               Edit
             </Link>
@@ -72,7 +73,7 @@ const TemplateShowPage = () => {
                             <div className='flex items-center space-x-2'>
                               <ClipboardBoard
                                 text="Copy Link"
-                                copyText={`${document.location.origin}/sign/${submitter.id}`}
+                                copyText={`${document.location.origin}/sign/${submitter.slug}`}
                                 className="btn btn-sm btn-info text-white no-animation"
                               />
                             </div>

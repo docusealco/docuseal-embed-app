@@ -43,6 +43,19 @@ const TemplateEditPage = () => {
       });
   }
 
+  const handleBuilderLoad = (data) => {
+    for (const docusealBuilder of document.getElementsByTagName('docuseal-builder')) {
+      const signYourselfButton = docusealBuilder.shadowRoot?.getElementById('sign_yourself_button');
+
+      if (signYourselfButton) {
+        signYourselfButton.addEventListener('click', (e) => {
+          e.preventDefault();
+          navigate(`/sign/${data.slug}`);
+        });
+      }
+    };
+  }
+
   if (loading) {
     return <PageLoader />;
   } else if (token) {
@@ -55,8 +68,9 @@ const TemplateEditPage = () => {
           token={token}
           autosave={false}
           onSave={handleTemplateSave}
+          onLoad={handleBuilderLoad}
           style={{ maxHeight: 'calc(-90px + 100vh)', display: 'block' }}
-          />
+        />
       </div>
     );
   };

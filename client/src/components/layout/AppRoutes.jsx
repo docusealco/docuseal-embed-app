@@ -42,7 +42,7 @@ const AppRoutes = () => {
       key: "submission_new_page",
     },
     {
-      path: "/sign/:id",
+      path: "/sign/:slug",
       component: <SubmitterSignPage />,
       key: "submitter_sign_page",
     },

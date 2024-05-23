@@ -1,4 +1,4 @@
-FROM ruby:3.3.0-alpine
+FROM alpine
 
 RUN apk add --no-cache nodejs yarn git
 
@@ -7,13 +7,10 @@ ENV NODE_ENV=production
 WORKDIR /client
 
 COPY client/package.json client/yarn.lock client/tailwind.config.js ./
-
-RUN yarn install
-
 COPY client/public ./public
 COPY client/src ./src
 
-RUN yarn run build
+RUN yarn install && yarn run build && rm -rf ./node_modules
 
 WORKDIR /server
 

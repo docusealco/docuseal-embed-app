@@ -88,7 +88,7 @@ const loadSubmissions = async (templateId, externalTemplateId) => {
         }
 
         submission.submitters.forEach(async (submitter) => {
-          const { rows: submitterRows } = await db.query('SELECT * FROM submitters WHERE uuid = $1', [submitter.uuid]);
+          const { rows: submitterRows } = await db.query('SELECT * FROM submitters WHERE external_id = $1', [submitter.id]);
 
           if (submitterRows.length === 0) {
             await db.query('INSERT INTO submitters (submission_id, external_id, uuid, email, slug, sent_at, opened_at, completed_at, status) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)', [submissionId, submitter.id.toString(), submitter.uuid, submitter.email, submitter.slug, submitter.sent_at, submitter.opened_at, submitter.completed_at, submitter.status]);
@@ -287,9 +287,9 @@ app.patch('/api/templates', (req, res) => {
 })
 
 // Submitters endpoints
-app.get('/api/sign/:id', async (req, res) => {
-  const { id: submitterId } = req.params;
-  const { rows: submitterRows } = await db.query('SELECT * FROM submitters WHERE id = $1', [submitterId]);
+app.get('/api/sign/:slug', async (req, res) => {
+  const { slug } = req.params;
+  const { rows: submitterRows } = await db.query('SELECT * FROM submitters WHERE slug = $1', [slug]);
 
   if (submitterRows.length === 0) {
     return res.status(404).json({ error: 'Submitter not found' });
@@ -305,10 +305,14 @@ app.post('/webhooks', async (req, res) => {
 
   if (['form.viewed', 'form.started', 'form.completed'].includes(event_type) && data) {
     const { rows: submitterRows } = await db.query('SELECT * FROM submitters WHERE external_id = $1', [data.id]);
+    const { rows: templateRows } = await db.query('SELECT * FROM templates WHERE external_id = $1', [data.template.id]);
     const submitter = submitterRows[0];
+    const template = templateRows[0];
 
     if (submitter) {
       await db.query('UPDATE submitters SET opened_at = $1, completed_at = $2, status = $3 WHERE external_id = $4', [data.opened_at, data.completed_at, data.status, data.id]);
+    } else if (template) {
+      loadSubmission(template.id, data.submission_id)
     }
   }
 

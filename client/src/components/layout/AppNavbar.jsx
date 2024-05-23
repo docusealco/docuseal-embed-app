@@ -6,7 +6,7 @@ const AppNavbar = () => {
       <span className="btn btn-ghost text-xl no-animation">Demo Project</span>
       <Link
         to="/templates/new"
-        className="btn btn-secondary text-white no-animation"
+        className="btn bg-green-500 border-green-500 text-white no-animation hover:bg-green-400 hover:border-green-400"
       >
         New Template
       </Link>

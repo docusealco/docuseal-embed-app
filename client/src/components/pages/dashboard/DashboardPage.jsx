@@ -32,7 +32,7 @@ const DashboardPage = () => {
           <div className="max-w-lg">
             <h1 className="text-5xl font-bold">No submissions found</h1>
             <p className="py-6">Unfortunately, there are no submissions available at the moment.</p>
-            <Link to="/templates/new" className="btn btn-primary text-white no-animation">New Tempate</Link>
+            <Link to="/templates/new" className="btn bg-green-500 border-green-500 text-white no-animation hover:bg-green-400 hover:border-green-400">New Tempate</Link>
           </div>
         </div>
       </div>
@@ -59,7 +59,7 @@ const DashboardPage = () => {
                             <div className='flex items-center space-x-2'>
                               <ClipboardBoard
                                 text="Copy Link"
-                                copyText={`${document.location.origin}/sign/${submitter.id}`}
+                                copyText={`${document.location.origin}/sign/${submitter.slug}`}
                                 className="btn btn-sm btn-info text-white no-animation"
                               />
                             </div>

@@ -131,7 +131,7 @@ const SubmissionNewPage = () => {
       "Hi there,\n\nYou have been invited to submit the \"{{template.name}}\" form.\n\n{{submitter.link}}\n\nPlease contact us by replying to this email if you didn't request this.\n\nThanks,\n'{{account.name}}'";
 
     return (
-      <div className="bg-slate-50 rounded-box p-6 border border-slate-300" style={{maxHeight: 'calc(-90px + 100vh)', overflow: 'auto' }}>
+      <div className="bg-slate-50 rounded-box p-6 border border-slate-300  max-w-2xl mx-auto" style={{maxHeight: 'calc(-90px + 100vh)', overflow: 'auto' }}>
         <form ref={formRef} onSubmit={handleSubmit}>
           <div className="flex items-center justify-between">
             <h1 className="text-2xl font-extrabold mb-4">

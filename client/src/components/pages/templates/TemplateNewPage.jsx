@@ -140,7 +140,7 @@ const TemplateNewPage = () => {
     );
   } else {
     return (
-      <div>
+      <div className='bg-slate-50 rounded-box p-6 border border-slate-300 border-1 max-w-2xl mx-auto'>
         <h1 className="text-2xl font-extrabold mb-4">New Document Template</h1>
         <form ref={formRef} onSubmit={handleTemplateCreate} autoComplete="off">
           <div className="form-control mt-6">

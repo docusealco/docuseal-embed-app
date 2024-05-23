@@ -33,7 +33,7 @@ const TemplatesIndexPage = () => {
           <div className="max-w-lg">
             <h1 className="text-5xl font-bold">No templates found</h1>
             <p className="py-6">Unfortunately, there are no templates available at the moment.</p>
-            <Link to="/templates/new" className="btn btn-primary text-white no-animation">New Tempate</Link>
+            <Link to="/templates/new" className="btn bg-green-500 border-green-500 text-white no-animation hover:bg-green-400 hover:border-green-400">New Tempate</Link>
           </div>
         </div>
       </div>
