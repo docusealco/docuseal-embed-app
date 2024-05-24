@@ -30,7 +30,7 @@ const SubmissionShowPage = () => {
     return (
       <div className="bg-slate-50 rounded-box border border-slate-300" style={{maxHeight: 'calc(-90px + 100vh)', overflow: 'auto' }}>
         <DocusealForm
-          src={`${process.env.REACT_APP_DOCUSEAL_URL}/d/${submitters[submitters.length - 1].slug}`}
+          src={`${process.env.REACT_APP_DOCUSEAL_URL}/s/${submitters[submitters.length - 1].slug}`}
           preview={true}
         />
       </div>

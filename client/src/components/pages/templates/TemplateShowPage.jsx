@@ -37,7 +37,17 @@ const TemplateShowPage = () => {
           <div className="max-w-lg">
             <h1 className="text-5xl font-bold">No submissions found</h1>
             <p className="py-6">Unfortunately, there are no submissions available at the moment.</p>
-            {template.slug && <Link to={`/templates/${templateId}/submissions/new`} className="btn btn-primary text-white no-animation">New Submission</Link>}
+            {template.slug ? (
+              <div className="flex gap-2 justify-center">
+                <Link to={`/sign/${template.slug}`} className="btn btn-info text-white no-animation">Sign Yourself</Link>
+                <Link to={`/templates/${templateId}/submissions/new`} className="btn btn-primary text-white no-animation">New Submission</Link>
+              </div>
+            ) : (
+              <Link to={`/templates/${templateId}/edit`} className="btn btn-accent text-white no-animation">
+                <MdEdit />
+                Edit Template
+              </Link>
+            )}
           </div>
         </div>
       </div>
