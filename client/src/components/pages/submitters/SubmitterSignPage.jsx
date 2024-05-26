@@ -1,33 +1,45 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { DocusealForm } from "@docuseal/react";
+import { PageLoader } from "../../ui";
 
 const SubmitterSignPage = () => {
   const { slug } = useParams();
   const [submitter, setSubmitter] = useState({});
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setLoading(true);
+
     fetch(`/api/sign/${slug}`, {
       headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      }
-    }).then((response) => response.json())
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    })
+      .then((response) => response.json())
       .then((data) => {
         setSubmitter(data.submitter || {});
-      }).catch((error) => {
-        console.error('Error:', error);
+        setLoading(false);
       })
+      .catch((error) => {
+        console.error("Error:", error);
+        setLoading(true);
+      });
   }, []);
 
-  if (submitter.slug) {
+  if (loading) {
+    return <PageLoader />;
+  } else if (submitter.slug) {
     return (
       <div
         className="bg-slate-50 rounded-box border border-slate-300"
         style={{ maxHeight: "calc(-90px + 100vh)", overflow: "auto" }}
       >
         <DocusealForm
-          src={`${process.env.REACT_APP_DOCUSEAL_URL}/${submitter.id ? 's' : 'd'}/${submitter.slug}`}
+          src={`${process.env.REACT_APP_DOCUSEAL_URL}/${
+            submitter.id ? "s" : "d"
+          }/${submitter.slug}`}
           email={submitter.email}
         />
       </div>

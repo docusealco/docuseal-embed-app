@@ -24,6 +24,8 @@ const TemplateNewPage = () => {
       fieldTypes: ['text', 'date', 'signature', 'initials']
     },
     custom_styles: {
+      withSendButton: true,
+      withSignYourselfButton: true,
       customCss: `
         #sign_yourself_button { background-color: #FFA500; }
         #send_button { background-color: #87CEEB; }
@@ -40,10 +42,11 @@ const TemplateNewPage = () => {
     }
   };
 
-  const builderProps = customTemplateProps[templateType] || {
+  const builderProps = {
     autosave: false,
     withSendButton: false,
     withSignYourselfButton: false,
+    ...customTemplateProps[templateType]
   };
 
   useEffect(() => {
@@ -121,6 +124,7 @@ const TemplateNewPage = () => {
         console.error('Error:', error);
       });
   }
+
 
   if (loading) {
     return <PageLoader />;
