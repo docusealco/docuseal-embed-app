@@ -4,4 +4,3 @@ import AppRoutes from "./AppRoutes";
 import AppSidebar from "./AppSidebar";
 
 export { AppContent, AppNavbar, AppRoutes, AppSidebar };
-

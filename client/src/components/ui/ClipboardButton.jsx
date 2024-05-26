@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 const ClipboardBoard = ({ text, copyText, ...props }) => {
   const [copied, setCopied] = useState(false);
@@ -11,14 +11,11 @@ const ClipboardBoard = ({ text, copyText, ...props }) => {
 
   return (
     <div className="relative">
-      <button
-        onClick={handleCopy}
-        {...props}
-      >
-        {copied ? 'Copied' : text}
+      <button onClick={handleCopy} {...props}>
+        {copied ? "Copied" : text}
       </button>
     </div>
   );
-}
+};
 
 export default ClipboardBoard;

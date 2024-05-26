@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { DocusealForm } from '@docuseal/react';
-import { PageLoader } from '../../ui';
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { DocusealForm } from "@docuseal/react";
+import { PageLoader } from "../../ui";
 
 const SubmissionShowPage = () => {
   const { id: submissionId } = useParams();
@@ -12,23 +12,28 @@ const SubmissionShowPage = () => {
     setLoading(true);
     fetch(`/api/submissions/${submissionId}`, {
       headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      }
-    }).then((response) => response.json())
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    })
+      .then((response) => response.json())
       .then((data) => {
         setSubmitters(data.submitters || []);
         setLoading(false);
-      }).catch((error) => {
-        console.error('Error:', error);
       })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   }, []);
 
   if (loading) {
     return <PageLoader />;
   } else if (submitters.length > 0) {
     return (
-      <div className="bg-slate-50 rounded-box border border-slate-300" style={{maxHeight: 'calc(-90px + 100vh)', overflow: 'auto' }}>
+      <div
+        className="bg-slate-50 rounded-box border border-slate-300"
+        style={{ maxHeight: "calc(-90px + 100vh)", overflow: "auto" }}
+      >
         <DocusealForm
           src={`${process.env.REACT_APP_DOCUSEAL_URL}/s/${submitters[submitters.length - 1].slug}`}
           preview={true}
@@ -46,6 +51,6 @@ const SubmissionShowPage = () => {
       </div>
     );
   }
-}
+};
 
 export default SubmissionShowPage;

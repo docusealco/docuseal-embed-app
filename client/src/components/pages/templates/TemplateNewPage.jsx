@@ -1,7 +1,7 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { DocusealBuilder } from '@docuseal/react';
+import React, { useState, useRef, useEffect } from "react";
+import { DocusealBuilder } from "@docuseal/react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { PageLoader } from '../../ui';
+import { PageLoader } from "../../ui";
 
 const TemplateNewPage = () => {
   const formRef = useRef(null);
@@ -10,18 +10,18 @@ const TemplateNewPage = () => {
   const [submitting, setSubmitting] = useState(false);
   const [template, setTemplate] = useState({});
   const [searchParams, setSearchParams] = useSearchParams();
-  const templateType = searchParams.get('type');
+  const templateType = searchParams.get("type");
   const navigate = useNavigate();
 
   const customTemplateProps = {
     custom_fields: {
       fields: [
-        { "name": "First Name", "type": "text" },
-        { "name": "Last Name", "type": "text" }
-      ],
+        { name: "First Name", type: "text" },
+        { name: "Last Name", type: "text" },
+      ]
     },
     allowed_fields: {
-      fieldTypes: ['text', 'date', 'signature', 'initials']
+      fieldTypes: ["text", "date", "signature", "initials"],
     },
     custom_styles: {
       withSendButton: true,
@@ -35,10 +35,10 @@ const TemplateNewPage = () => {
       preview: true
     },
     multi_language: {
-      language: ['es', 'de', 'fr', 'pt', 'he', 'ar'][Math.floor(Math.random() * 6)]
+      language: ["es", "de", "fr", "pt", "he", "ar"][Math.floor(Math.random() * 6)]
     },
     defined_signer_roles: {
-      roles: ['Signer', 'Approver']
+      roles: ["Signer", "Approver"]
     }
   };
 
@@ -60,20 +60,22 @@ const TemplateNewPage = () => {
   const loadDemoTemplate = () => {
     setLoading(true);
 
-    fetch('/api/templates/demo', {
+    fetch("/api/templates/demo", {
       headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      }
-    }).then((response) => response.json())
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    })
+      .then((response) => response.json())
       .then((data) => {
         setToken(data.token);
         setLoading(false);
-      }).catch((error) => {
-        console.error('Error:', error);
-        setLoading(false);
       })
-  }
+      .catch((error) => {
+        console.error("Error:", error);
+        setLoading(false);
+      });
+  };
 
   const handleTemplateCreate = (e) => {
     e.preventDefault();
@@ -84,47 +86,48 @@ const TemplateNewPage = () => {
 
     fetch(`/api/templates`, {
       headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
+        "Content-Type": "application/json",
+        Accept: "application/json",
       },
       method: "POST",
-      body: JSON.stringify({ name: formData.get('name') })
+      body: JSON.stringify({ name: formData.get("name") }),
     })
-    .then((response) => {
-      if (response.ok) {
-         response.json().then((data) => {
+      .then((response) => {
+        if (response.ok) {
+          response.json().then((data) => {
             setSubmitting(false);
             setToken(data.token);
             setTemplate(data.template);
           });
-      } else {
-        response.json().then((data) => {
-          setSubmitting(false);
-        })
-      }
-    })
-    .catch((error) => {
-      setSubmitting(false);
-    });
+        } else {
+          response.json().then(() => {
+            setSubmitting(false);
+          });
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        setSubmitting(false);
+      });
   };
 
   const handleTemplateSave = (data) => {
-    fetch('/api/templates', {
-      method: 'PATCH',
+    fetch("/api/templates", {
+      method: "PATCH",
       headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
+        "Content-Type": "application/json",
+        Accept: "application/json",
       },
-      body: JSON.stringify({ template_id: template.id, external_id: data.id })
-    }).then((response) => response.json())
+      body: JSON.stringify({ template_id: template.id, external_id: data.id }),
+    })
+      .then((response) => response.json())
       .then((data) => {
         navigate(`/templates/${data.template.id}`);
       })
       .catch((error) => {
-        console.error('Error:', error);
+        console.error("Error:", error);
       });
-  }
-
+  };
 
   if (loading) {
     return <PageLoader />;
@@ -137,14 +140,14 @@ const TemplateNewPage = () => {
         <DocusealBuilder
           token={token}
           onSave={handleTemplateSave}
-          style={{ maxHeight: 'calc(-90px + 100vh)', display: 'block' }}
+          style={{ maxHeight: "calc(-90px + 100vh)", display: "block" }}
           {...builderProps}
         />
       </div>
     );
   } else {
     return (
-      <div className='bg-slate-50 rounded-box p-6 border border-slate-300 border-1 max-w-2xl mx-auto'>
+      <div className="bg-slate-50 rounded-box p-6 border border-slate-300 border-1 max-w-2xl mx-auto">
         <h1 className="text-2xl font-extrabold mb-4">New Document Template</h1>
         <form ref={formRef} onSubmit={handleTemplateCreate} autoComplete="off">
           <div className="form-control mt-6">
@@ -170,6 +173,6 @@ const TemplateNewPage = () => {
       </div>
     );
   }
-}
+};
 
 export default TemplateNewPage;

@@ -21,15 +21,15 @@ const SubmissionNewPage = () => {
     })
       .then((response) => {
         if (response.ok) {
-           response.json().then((data) => {
-              setTemplate(data.template || {});
-              setLoading(false);
-            });
+          response.json().then((data) => {
+            setTemplate(data.template || {});
+            setLoading(false);
+          });
         } else {
           response.json().then((data) => {
             setFormError(data.error);
             setLoading(false);
-          })
+          });
         }
       })
       .catch((error) => {
@@ -98,23 +98,23 @@ const SubmissionNewPage = () => {
       method: "POST",
       body: JSON.stringify(formDataObject),
     })
-    .then((response) => {
-      if (response.ok) {
-         response.json().then((data) => {
+      .then((response) => {
+        if (response.ok) {
+          response.json().then(() => {
             setSubmitting(false);
             navigate(`/templates/${templateId}`);
           });
-      } else {
-        response.json().then((data) => {
-          setFormError(data.error);
-          setSubmitting(false);
-        })
-      }
-    })
-    .catch((error) => {
-      setFormError(error);
-      setSubmitting(false);
-    });
+        } else {
+          response.json().then((data) => {
+            setFormError(data.error);
+            setSubmitting(false);
+          });
+        }
+      })
+      .catch((error) => {
+        setFormError(error);
+        setSubmitting(false);
+      });
   };
 
   const handleEditMessage = (e) => {
@@ -131,15 +131,24 @@ const SubmissionNewPage = () => {
       "Hi there,\n\nYou have been invited to submit the \"{{template.name}}\" form.\n\n{{submitter.link}}\n\nPlease contact us by replying to this email if you didn't request this.\n\nThanks,\n'{{account.name}}'";
 
     return (
-      <div className="bg-slate-50 rounded-box p-6 border border-slate-300  max-w-2xl mx-auto" style={{maxHeight: 'calc(-90px + 100vh)', overflow: 'auto' }}>
+      <div
+        className="bg-slate-50 rounded-box p-6 border border-slate-300  max-w-2xl mx-auto"
+        style={{ maxHeight: "calc(-90px + 100vh)", overflow: "auto" }}
+      >
         <form ref={formRef} onSubmit={handleSubmit}>
           <div className="flex items-center justify-between">
             <h1 className="text-2xl font-extrabold mb-4">
               Add Recipients for "{template.name}"
             </h1>
           </div>
-          {formError && <div className="alert bg-red-400 text-white mb-4">{formError}</div>}
-          <div className={`grid ${template.submitters.length > 1 ? "md:grid-cols-2" : ""} gap-4`}>
+          {formError && (
+            <div className="alert bg-red-400 text-white mb-4">{formError}</div>
+          )}
+          <div
+            className={`grid ${
+              template.submitters.length > 1 ? "md:grid-cols-2" : ""
+            } gap-4`}
+          >
             {template.submitters.map((item, index) => (
               <div className="form-control" key={item.uuid}>
                 {template.submitters.length > 1 ? (
@@ -163,7 +172,13 @@ const SubmissionNewPage = () => {
                     dir="auto"
                   />
                 </div>
-                <div className={`grid ${template.submitters.length === 1 ? "md:grid-cols-2 gap-1" : ""}`}>
+                <div
+                  className={`grid ${
+                    template.submitters.length === 1
+                      ? "md:grid-cols-2 gap-1"
+                      : ""
+                  }`}
+                >
                   <input
                     type="email"
                     multiple
@@ -176,8 +191,12 @@ const SubmissionNewPage = () => {
                     type="tel"
                     pattern="^\+[0-9\s\-]+$"
                     name={`submission.submitters[${index}].phone`}
-                    onInvalid={(e) => e.target.setCustomValidity("Use internatioanl format: +1xxx...")}
-                    onInput={e => e.target.setCustomValidity('')}
+                    onInvalid={(e) =>
+                      e.target.setCustomValidity(
+                        "Use internatioanl format: +1xxx..."
+                      )
+                    }
+                    onInput={(e) => e.target.setCustomValidity("")}
                     autoComplete="off"
                     className="input input-sm input-bordered mt-1.5 w-full"
                     placeholder="Phone (optional)"
