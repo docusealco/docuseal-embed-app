@@ -8,6 +8,7 @@ import TemplateBuilderWithMultiLanguage from "./TemplateBuilderWithMultiLanguage
 import TemplateBuilderWithDefinedSignerRoles from "./TemplateBuilderWithDefinedSignerRoles";
 
 const TemplateBuilder = ({ templateType, ...props }) => {
+  const baseProps = { host: process.env.REACT_APP_DOCUSEAL_CDN_HOST, ...props };
   const customBuilders = {
     custom_fields: TemplateBuilderWithCustomFields,
     allowed_fields: TemplateBuilderWithAllowedFields,
@@ -17,7 +18,7 @@ const TemplateBuilder = ({ templateType, ...props }) => {
     defined_signer_roles: TemplateBuilderWithDefinedSignerRoles,
   };
 
-  return React.createElement(customBuilders[templateType] || DocusealBuilder, props);
+  return React.createElement(customBuilders[templateType] || DocusealBuilder, baseProps);
 };
 
 export default TemplateBuilder;

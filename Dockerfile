@@ -4,6 +4,7 @@ RUN apk add --no-cache nodejs yarn git
 
 ENV NODE_ENV=production
 ENV REACT_APP_DOCUSEAL_URL=https://docuseal.co
+ENV REACT_APP_DOCUSEAL_CDN_HOST=cdn.docuseal.co
 
 WORKDIR /client
 

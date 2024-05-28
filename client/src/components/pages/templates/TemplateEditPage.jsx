@@ -68,6 +68,7 @@ const TemplateEditPage = () => {
         className="bg-slate-50 rounded-box border border-slate-300 border-1 overflow-y-hidden"
       >
         <DocusealBuilder
+          host={process.env.REACT_APP_DOCUSEAL_CDN_HOST}
           token={token}
           autosave={false}
           onSave={handleTemplateSave}

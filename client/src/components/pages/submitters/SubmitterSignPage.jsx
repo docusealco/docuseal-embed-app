@@ -37,9 +37,8 @@ const SubmitterSignPage = () => {
         style={{ maxHeight: "calc(-90px + 100vh)", overflow: "auto" }}
       >
         <DocusealForm
-          src={`${process.env.REACT_APP_DOCUSEAL_URL}/${
-            submitter.id ? "s" : "d"
-          }/${submitter.slug}`}
+          host={process.env.REACT_APP_DOCUSEAL_CDN_HOST}
+          src={`${process.env.REACT_APP_DOCUSEAL_URL}/${submitter.id ? "s" : "d"}/${submitter.slug}`}
           email={submitter.email}
         />
       </div>

@@ -35,6 +35,7 @@ const SubmissionShowPage = () => {
         style={{ maxHeight: "calc(-90px + 100vh)", overflow: "auto" }}
       >
         <DocusealForm
+          host={process.env.REACT_APP_DOCUSEAL_CDN_HOST}
           src={`${process.env.REACT_APP_DOCUSEAL_URL}/s/${submitters[submitters.length - 1].slug}`}
           preview={true}
         />
