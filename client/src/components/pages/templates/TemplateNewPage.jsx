@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
-import { DocusealBuilder } from "@docuseal/react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { PageLoader } from "../../ui";
+import TemplateBuilder from "./components/TemplateBuilder";
 
 const TemplateNewPage = () => {
   const formRef = useRef(null);
@@ -12,42 +12,6 @@ const TemplateNewPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const templateType = searchParams.get("type");
   const navigate = useNavigate();
-
-  const customTemplateProps = {
-    custom_fields: {
-      fields: [
-        { name: "First Name", type: "text" },
-        { name: "Last Name", type: "text" },
-      ]
-    },
-    allowed_fields: {
-      fieldTypes: ["text", "date", "signature", "initials"],
-    },
-    custom_styles: {
-      withSendButton: true,
-      withSignYourselfButton: true,
-      customCss: `
-        #sign_yourself_button { background-color: #FFA500; }
-        #send_button { background-color: #87CEEB; }
-      `
-    },
-    preview_mode: {
-      preview: true
-    },
-    multi_language: {
-      language: ["es", "de", "fr", "pt", "he", "ar"][Math.floor(Math.random() * 6)]
-    },
-    defined_signer_roles: {
-      roles: ["Signer", "Approver"]
-    }
-  };
-
-  const builderProps = {
-    autosave: false,
-    withSendButton: false,
-    withSignYourselfButton: false,
-    ...customTemplateProps[templateType]
-  };
 
   useEffect(() => {
     if (templateType) {
@@ -137,11 +101,14 @@ const TemplateNewPage = () => {
         key={Math.random()}
         className="bg-slate-50 rounded-box border border-slate-300 border-1 overflow-y-hidden"
       >
-        <DocusealBuilder
+        <TemplateBuilder
+          templateType={templateType}
+          autosave={false}
+          withSendButton={false}
+          withSignYourselfButton={false}
           token={token}
           onSave={handleTemplateSave}
           style={{ maxHeight: "calc(-90px + 100vh)", display: "block" }}
-          {...builderProps}
         />
       </div>
     );
