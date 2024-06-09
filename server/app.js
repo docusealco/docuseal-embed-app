@@ -61,7 +61,7 @@ const loadSubmission = async (templateId, externalSubmissionId) => {
         const { rows: submitterRows } = await db.query('SELECT * FROM submitters WHERE external_id = $1', [submitter.id]);
 
         if (submitterRows.length === 0) {
-          await db.query('INSERT INTO submitters (submission_id, external_id, uuid, email, slug, sent_at, opened_at, completed_at, status) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) ON CONFLICT (external_id) DO UPDATE SET sent_at = $6, opened_at = $7, completed_at = $8, status = $9', [submissionId, submitter.id.toString(), submitter.uuid, submitter.email, submitter.slug, submitter.sent_at, submitter.opened_at, submitter.completed_at, submitter.status]);
+          await db.query('INSERT INTO submitters (submission_id, external_id, uuid, app_id, email, slug, sent_at, opened_at, completed_at, status) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) ON CONFLICT (external_id) DO UPDATE SET sent_at = $7, opened_at = $8, completed_at = $9, status = $10', [submissionId, submitter.id.toString(), submitter.uuid, submitter.external_id, submitter.email, submitter.slug, submitter.sent_at, submitter.opened_at, submitter.completed_at, submitter.status]);
         }
       });
     }).catch((error) => {
@@ -91,7 +91,7 @@ const loadSubmissions = async (templateId, externalTemplateId) => {
           const { rows: submitterRows } = await db.query('SELECT * FROM submitters WHERE external_id = $1', [submitter.id]);
 
           if (submitterRows.length === 0) {
-            await db.query('INSERT INTO submitters (submission_id, external_id, uuid, email, slug, sent_at, opened_at, completed_at, status) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)', [submissionId, submitter.id.toString(), submitter.uuid, submitter.email, submitter.slug, submitter.sent_at, submitter.opened_at, submitter.completed_at, submitter.status]);
+            await db.query('INSERT INTO submitters (submission_id, external_id, uuid, app_id, email, slug, sent_at, opened_at, completed_at, status) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)', [submissionId, submitter.id.toString(), submitter.uuid, submitter.external_id, submitter.email, submitter.slug, submitter.sent_at, submitter.opened_at, submitter.completed_at, submitter.status]);
           }
         });
       });
@@ -277,7 +277,7 @@ app.patch('/api/templates', (req, res) => {
     }
   }).then((response) => response.json())
     .then(async (data) => {
-      const { rows: templateRows } = await db.query('UPDATE templates SET external_id = $1, name = $2, slug = $3, preview_image_url = $4, submitters = $5 WHERE id = $6 RETURNING *', [data.id, data.name, data.slug, data.documents[0]?.preview_image_url, data.submitters.map(JSON.stringify), templateId]);
+      const { rows: templateRows } = await db.query('UPDATE templates SET external_id = $1, app_id = $2, name = $3, slug = $4, preview_image_url = $5, submitters = $6 WHERE id = $7 RETURNING *', [data.id, data.external_id, data.name, data.slug, data.documents[0]?.preview_image_url, data.submitters.map(JSON.stringify), templateId]);
 
       return res.json({ template: templateRows[0] });
     }).catch((error) => {

@@ -29,6 +29,8 @@ const SubmissionShowPage = () => {
   if (loading) {
     return <PageLoader />;
   } else if (submitters.length > 0) {
+    const submitter = submitters[submitters.length - 1];
+
     return (
       <div
         className="bg-slate-50 rounded-box border border-slate-300"
@@ -36,7 +38,8 @@ const SubmissionShowPage = () => {
       >
         <DocusealForm
           host={process.env.REACT_APP_DOCUSEAL_CDN_HOST}
-          src={`${process.env.REACT_APP_DOCUSEAL_URL}/s/${submitters[submitters.length - 1].slug}`}
+          src={`${process.env.REACT_APP_DOCUSEAL_URL}/s/${submitter.slug}`}
+          externalId={submitter.app_id}
           preview={true}
         />
       </div>

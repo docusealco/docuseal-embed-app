@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { PageLoader } from "../../ui";
+import { v4 as uuidv4 } from 'uuid';
 
 const SubmissionNewPage = () => {
   const formRef = useRef(null);
@@ -160,6 +161,11 @@ const SubmissionNewPage = () => {
                   type="hidden"
                   name={`submission.submitters[${index}].role`}
                   value={item.name}
+                />
+                <input
+                  type="hidden"
+                  name={`submission.submitters[${index}].external_id`}
+                  value={uuidv4()}
                 />
                 <div data-field="name">
                   <input

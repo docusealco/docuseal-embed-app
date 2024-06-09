@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS submitters (
   submission_id INTEGER REFERENCES submissions(id),
   external_id VARCHAR(100),
   uuid VARCHAR(100),
+  app_id VARCHAR(100),
   email VARCHAR(100),
   slug VARCHAR(100),
   sent_at TIMESTAMP,
