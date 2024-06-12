@@ -277,7 +277,7 @@ app.patch('/api/templates', (req, res) => {
     }
   }).then((response) => response.json())
     .then(async (data) => {
-      const { rows: templateRows } = await db.query('UPDATE templates SET external_id = $1, app_id = $2, name = $3, slug = $4, preview_image_url = $5, submitters = $6 WHERE id = $7 RETURNING *', [data.id, data.external_id, data.name, data.slug, data.documents[0]?.preview_image_url, data.submitters.map(JSON.stringify), templateId]);
+      const { rows: templateRows } = await db.query('UPDATE templates SET external_id = $1, name = $2, slug = $3, preview_image_url = $4, submitters = $5 WHERE id = $6 RETURNING *', [data.id, data.name, data.slug, data.documents[0]?.preview_image_url, data.submitters.map(JSON.stringify), templateId]);
 
       return res.json({ template: templateRows[0] });
     }).catch((error) => {
