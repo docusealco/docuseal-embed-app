@@ -40,6 +40,7 @@ const SubmitterSignPage = () => {
         <DocusealForm
           host={process.env.REACT_APP_DOCUSEAL_CDN_HOST}
           src={`${process.env.REACT_APP_DOCUSEAL_URL}/${submitter.id ? "s" : "d"}/${submitter.slug}`}
+          rememberSignature={true}
           externalId={uuidv4()}
           email={submitter.email}
         />

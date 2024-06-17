@@ -39,6 +39,7 @@ const SubmissionShowPage = () => {
         <DocusealForm
           host={process.env.REACT_APP_DOCUSEAL_CDN_HOST}
           src={`${process.env.REACT_APP_DOCUSEAL_URL}/s/${submitter.slug}`}
+          rememberSignature={true}
           externalId={submitter.app_id}
           preview={true}
         />
