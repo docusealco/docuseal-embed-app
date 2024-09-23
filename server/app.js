@@ -201,7 +201,7 @@ app.get('/api/templates/demo', async (req, res) => {
 });
 
 app.get('/api/templates', async (req, res) => {
-  const { rows } = await db.query('SELECT * FROM templates ORDER BY id DESC');
+  const { rows } = await db.query('SELECT * FROM templates ORDER BY id DESC LIMIT 5');
 
   res.json({ templates: rows });
 });
