@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
+import ReactDOMServer from 'react-dom/server';
 import { useParams } from "react-router-dom";
 import { DocusealForm } from "@docuseal/react";
-import { PageLoader } from "../../ui";
+import { PageLoader, LogoPlaceholder } from "../../ui";
 
 const SubmissionShowPage = () => {
   const { id: submissionId } = useParams();
@@ -42,6 +43,7 @@ const SubmissionShowPage = () => {
           rememberSignature={true}
           externalId={submitter.app_id}
           preview={true}
+          logo={`data:image/svg+xml;base64,${btoa(ReactDOMServer.renderToString(<LogoPlaceholder />)).replace('\n', '')}`}
         />
       </div>
     );

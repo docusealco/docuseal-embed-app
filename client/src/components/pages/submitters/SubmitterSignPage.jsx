@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
+import ReactDOMServer from 'react-dom/server';
 import { useParams } from "react-router-dom";
 import { DocusealForm } from "@docuseal/react";
-import { PageLoader } from "../../ui";
+import { PageLoader, LogoPlaceholder } from "../../ui";
 import { v4 as uuidv4 } from 'uuid';
 
 const SubmitterSignPage = () => {
@@ -43,6 +44,7 @@ const SubmitterSignPage = () => {
           rememberSignature={true}
           externalId={uuidv4()}
           email={submitter.email}
+          logo={`data:image/svg+xml;base64,${btoa(ReactDOMServer.renderToString(<LogoPlaceholder />)).replace('\n', '')}`}
         />
       </div>
     );
