@@ -104,7 +104,7 @@ const loadSubmissions = async (templateId, externalTemplateId) => {
 // ====================
 // Submissions endpoints
 app.get('/api/submissions', async (req, res) => {
-  const { rows: submissionRows } = await db.query('SELECT * FROM submissions ORDER BY id DESC');
+  const { rows: submissionRows } = await db.query('SELECT * FROM submissions ORDER BY id DESC LIMIT 20');
 
   if (submissionRows.length === 0) return res.json({ submissions: [] });
 
@@ -233,7 +233,7 @@ app.get('/api/templates/:id', async (req, res) => {
 
   await loadSubmissions(templateId, templateRows[0].external_id)
 
-  const { rows: submissionRows } = await db.query('SELECT * FROM submissions WHERE template_id = $1 ORDER BY id DESC ', [templateId]);
+  const { rows: submissionRows } = await db.query('SELECT * FROM submissions WHERE template_id = $1 ORDER BY id DESC LIMIT 20', [templateId]);
 
   if (submissionRows.length === 0) return res.json({ template: templateRows[0] || {}, submissions: [] });
 
